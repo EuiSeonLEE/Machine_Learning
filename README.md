@@ -1,5 +1,4 @@
-# Machine_Learning
-# 요약
+# Machine_Learning project 요약
 
 ## 구조
 
