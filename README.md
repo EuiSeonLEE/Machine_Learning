@@ -1,5 +1,7 @@
 # Machine_Learning project 요약
-
+## 목적
+>Artificial Neural Networks(ANN)구조를 C언어를 통해 설계하여 Learning 알고리즘을 통해 2차원 영역을 학습하고
+최적의 학습 결과물을 만들며 Machine Learing을 이해한다.
 ## 구조
 
 ![뉴런 구조 : Neurons_Structure](https://user-images.githubusercontent.com/84891209/178103580-ec3f6c60-2e9a-4e2e-9a44-46922ab5f37e.png)
