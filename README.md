@@ -25,12 +25,31 @@
 
 <details>
 <summary>핵심 기능 설명 펼치기</summary>
-<div markdown="1">       
+<div markdown="1">  
 
-😎숨겨진 내용😎
+
 ### 4.1 구조
+<br/>
 
 ![뉴런 구조 : Neurons_Structure](https://user-images.githubusercontent.com/84891209/178103580-ec3f6c60-2e9a-4e2e-9a44-46922ab5f37e.png)
+
+### 4.2 플로우 차트
+![FlowChart](https://user-images.githubusercontent.com/84891209/179398552-d9e61152-d855-4a8c-a724-5eec469203c5.png)
+
+### 4.3 학습 알고리즘 인자 설정
+- 학습 알고리즘 인자를 설정하기 전, Artificial Neural Networks(ANN)을 구조적으로 설정 해주어야 합니다.
+  -  **Hidden Layer 개수** : Hidden Layer는 1 ~ 10개 사이로 설정 가능합니다.
+  -  **Hidden Neurons 개수** : Hidden Neurons는 1 ~ 15개 사이로 설정 가능합니다.
+  -  **Input Neurons 개수** : Input Neurons는 1 ~ 10개 사이로 설정 가능합니다.
+  -  **Output Neurons 개수** :  Output Neurons는 1 ~ 2개 사이로 설정 가능합니다.
+  -  **Bias Neuron 존재 유무** : Bias Neurons을 사용할 것인지 정할 수 있습니다.
+     -  Bias Neuron이 존재하게 된다면, sigmoid 함수에 의해 미분을 하며 학습을 할 수 있습니다. 즉, 논리식 中 XOR연산이 가능하게 되어 2차원 학습 연산을 완벽하게 수행할 수 있게 됩니다.
+-  학습 알고리즘 인자들을 설정해 줍니다.
+   - **Learning Gain** : 간단하게 학습율이라는 단위입니다. inputdata와 맞게 적당하게 설정해주어야 학습이 잘됩니다.
+   - **Epoch** : 최대 학습 횟수입니다. 얼마나 학습할 것인지 미리 정해둡니다.
+   - **W_Epoch** : 학습 중간중간에 격자화를 시키기 위해, 몇번째 학습횟수 마다 격자화할 것인지 정해둡니다.
+ 
+### 4.4 EBP(Error Back Propagation) 알고리즘
 </div>
 </details>
 
