@@ -44,20 +44,38 @@
   -  **Output Neurons 개수** :  Output Neurons는 1 ~ 2개 사이로 설정 가능합니다.
   -  **Bias Neuron 존재 유무** : Bias Neurons을 사용할 것인지 정할 수 있습니다.
      -  Bias Neuron이 존재하게 된다면, sigmoid 함수에 의해 미분을 하며 학습을 할 수 있습니다. 즉, 논리식 中 XOR연산이 가능하게 되어 2차원 학습 연산을 완벽하게 수행할 수 있게 됩니다.
--  학습 알고리즘 인자들을 설정해 줍니다.
+-  **학습 알고리즘 인자**들을 설정해 줍니다.
    - **Learning Gain** : 간단하게 학습율이라는 단위입니다. inputdata와 맞게 적당하게 설정해주어야 학습이 잘됩니다.
    - **Epoch** : 최대 학습 횟수입니다. 얼마나 학습할 것인지 미리 정해둡니다.
-   - **W_Epoch** : 학습 중간중간에 격자화를 시키기 위해, 몇번째 학습횟수 마다 격자화할 것인지 정해둡니다.
+   - **W_Epoch** : 학습 중간중간에 격자화를 시키기 위해, 몇번의 학습횟수 마다 격자화할 것인지 정해둡니다.
  
 ### 4.4 EBP(Error Back Propagation) 알고리즘
+- **구조를 보면 Layer의 Neurons 사이에 연결된 선들이 보이는데, 이 선들에게는 가중치(Weight)가 존재합니다. 이 가중치(Weight)를 1번 학습 할 때 마다 Delta값으로 갱신해줍니다.**
+   1. Layer가 넘어갈 때 마다 해당 Layer의 각 Neuron들은 연결된 Neuron들과 가중치에게 영향을 받게 되는데, 이에 대한 결과 값을 u라고 정의한다. :pin:
+   2. 최종 Output Neuron들의 u들을 모두 더한 값을 최종 결과값 y로 정의한다.
+   3. y로 해당학습의 Error율을 구한다.
+   4. y와 미리 설정된 target값으로 계산하여 Output Neuron의 Delta값을 구한다.
+   5. 그 후, Input layer를 제외한 모든 Layer의 Neuron들의 Delta값을 구한다.
+   6. 모두 구한 Delta값으로 연결된 각 Neuron들의 가중치(Weight)를 갱신한다.
+   7. 1~6번 과정을 inputdata의 좌표값이 모두 계산되야 1 epoch(학습 횟수)이다.
+
+### 4.5 Grid Test
+- **해당 프로그램의 학습 진행 과정을 볼 수 있게 격자화(시각화)하여 관찰할 수 있습니다.**
+1. 몇번의 epoch(학습 횟수) 마다 격자화할 것인지 **W_Epoch**라는 정해진 인자로 결정한다.
+2. EBP 알고리즘으로 학습된 W를 갖고 y값을 도출하여 Threshold값으로 해당 좌표가 0과 1인지 판단한다.
+3. 판단이 되면 해당 좌표를 cmd창에 표현하기 위해 **0 이면 "."**, **1 이면 "O"** 으로 출력한다.
+
+### 4.6 Evolution Test
 </div>
 </details>
-
+ 
 ## 5. 핵심 트러블 슈팅
 ## 6. 그 외 트러블 슈팅
 ## 7. 결과물
-### inputdata : X
+
+### 7.1 inputdata : X
 <img src="https://user-images.githubusercontent.com/84891209/178103473-278c2023-b53d-4495-8867-a521288e7635.png" width="400px" height="400px" title="입력 데이터 : inputdata_X" alt="입력 데이터 : inputdata_X"></img><img src="https://user-images.githubusercontent.com/84891209/178103586-9b488a72-bd08-499b-a0be-8088406b63a8.gif" width="400px" height="400px" title="학습 과정 및 결과_X" alt="학습 과정 및 결과_X"></img><br/>
-### inputdata : Star
+
+### 7.2 inputdata : Star
 <img src="https://user-images.githubusercontent.com/84891209/178103578-1fb74ea7-f0e6-4c7a-9be3-9cfa357af961.png" width="400px" height="400px" title="입력 데이터 : inputdata_star" alt="입력 데이터 : inputdata_star"></img><img src="https://user-images.githubusercontent.com/84891209/178103590-790677c6-7232-4dd9-8fe7-f1c21c6ddbe4.gif" width="400px" height="400px" title="입력 데이터 : 학습 과정 및 결과_star" alt="입력 데이터 : 학습 과정 및 결과_star"></img><br/>
 
