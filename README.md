@@ -76,149 +76,58 @@
 - 이 프로그램은 설정값을 갖고 학습을 시키고 설정된 ANN구조에따라 진행되는 학습 능률을 관찰하기 위해 개발했습니다.<br/>
 그래서 **#Define** 혹은 **전역변수**으로 설정값을 설정하는 방법을 적용시켰습니다.
    <details>
-   <summary>기존 코드</summary>
+   <summary style="font-Weight : bold; font-size : 15px; color : #E43914;">기존 코드</summary>
    <div markdown="1">  
 
 
    ```c
    #define InputNUM 2
    #define OutputNUM 1
-   #define hlnum 10
+   #define hlnum 1
    #define Bias 0
    #define eta 0.9
    int HLneurons[10] = { 15, 15, 15, 15, 15, 15, 15, 15, 15, 15};
-
-   double HLw[10][15][15];
-   double w_in[10][15];
-   double w_out[15][2]; // hidden layer - output layer w
-   double w_bias[10][15]; //bias - hidden layer1 w
-   double w_out_bias[2]; //bias - hidden layer2 w, bias - output layer w
-
    double target[2] = { 0.0, };
-   double E = 0.0;
-   int cnt = 0;
    int ErrCount = 0, WeightCount = 0;
-
-   void EBP(double u_in[], double u[][15], double u_out[], double Delta[][15], double Delta_out[], double E, double target[]){
-      double s[10][15] = { 0.0, };
-      double s_out[2] = { 0.0, };
-      
-      // 만약 HLnum = 4
-      // HLneurons[HLnum] = {2, 3, 4, 5} 라고 한다면
-      for (int a = 0; a < HLneurons[0]; a++) {
-         s[0][a] += bias * w_bias[0][a]; //바이어스 2개만 더해짐
-         for (int b = 0; b < InputNUM; b++) {
-            s[0][a] += u_in[b] * w_in[b][a];
-            //printf("s%d:%d = %lf\n", a, b, s[0][a]);
-         }
-         u[0][a] = 1.0 / (1.0 + exp(-s[0][a]));
-         //printf("u%d = %lf\n",a, u[0][a]);
-      }
-
-      for (int a = 0; a < HLnum - 1; a++) {
-         for (int b = 0; b < HLneurons[a + 1]; b++) {
-            s[a + 1][b] += bias * w_bias[a + 1][b];
-            for (int c = 0; c < HLneurons[a]; c++) {
-               s[a + 1][b] += HLw[a][b][c] * u[a][c];
-               //printf("s%d:%d = %lf\n", a + 1, a, s[a + 1][b]);
-            }
-            u[a + 1][b] = 1.0 / (1.0 + exp(-s[a + 1][b]));
-            //printf("u%d = %lf\n",a+1, u[a+1][b]);
-         }
-      }
-
-      for (int a = 0; a < OutputNUM; a++) {
-         s_out[a] += bias * w_out_bias[a];
-         for (int b = 0; b < HLneurons[HLnum - 1]; b++) {
-            s_out[a] += w_out[b][a] * u[HLnum - 1][b];
-            //printf("s_out%d = %lf\n", a, s_out[a]);
-         }
-         u_out[a] = 1.0 / (1.0 + exp(-s_out[a]));
-         //printf("u_out%d = %lf\n", a, u_out[a]);
-      }
-      /*========================E의 변화==========================*/
-      if (OutputNUM == 1) {
-         //E += fabs(target[0] - u_out[0]);
-         E += (((target[0] - u_out[0]) * (target[0] - u_out[0]))/2);
-      }
-      else if (OutputNUM == 2) {
-         //E += (fabs(target[0] - u_out[0]) + fabs(target[1] - u_out[1])) / 2;
-         E += (((target[0] - u_out[0]) * (target[0] - u_out[0]) + (target[1] - u_out[1]) * (target[1] - u_out[1]))/2);
-      }
-      /*========================Delta 구하기=========================*/
-      for (int a = 0; a < OutputNUM; a++) {
-         Delta_out[a] = u_out[a] * (1.0 - u_out[a]) * (target[a] - u_out[a]);
-         //printf("Delata_out %d = %lf\n",a, Delta_out[a]);
-      }
-
-
-      for (int a = 0; a < HLneurons[HLnum - 1]; a++) {
-         double sum = 0.0;
-         for (int b = 0; b < OutputNUM; b++) {
-            sum += w_out[a][b] * Delta_out[b];
-         }
-         Delta[HLnum - 1][a] = u[HLnum - 1][a] * (1.0 - u[HLnum - 1][a]) * sum;
-         //printf("Delata %d:%d = %lf\n",HLnum-1,a, Delta[HLnum-1][a]);
-      }
-
-      for (int a = HLnum - 1; a > 0; a--) {
-         for (int b = 0; b < HLneurons[a - 1]; b++) {
-            double sum = 0.0;
-            for (int c = 0; c < HLneurons[a]; c++) {
-               sum += Delta[a][c] * HLw[a - 1][c][b];
-            }
-            Delta[a - 1][b] = u[a - 1][b] * (1.0 - u[a - 1][b]) * sum;
-            //printf("Delata %d:%d = %lf\n",a-1,b, Delta[a-1][b]);
-         }
-      }
-      /*========================w의 변화==========================*/
-      for (int a = 0; a < InputNUM; a++) {
-         for (int b = 0; b < HLneurons[0]; b++) {
-            w_in[a][b] += u_in[a] * Delta[0][b] * ETA;
-            //printf("w_in %d:%d = %lf\n", a, b, w_in[a][b]);
-         }
-      }
-      for (int a = HLnum - 1; a > 0; a--) {
-         for (int b = 0; b < HLneurons[a - 1]; b++) {
-            for (int c = 0; c < HLneurons[a]; c++) {
-               HLw[a - 1][c][b] += u[a - 1][b] * Delta[a][c] * ETA;
-               //printf("HLw %d:%d:%d = %lf\n", a, b, c, HLw[a][b][c]);
-            }
-         }
-      }
-      for (int a = 0; a < HLneurons[HLnum - 1]; a++) {
-         for (int b = 0; b < OutputNUM; b++) {
-            w_out[a][b] += u[HLnum - 1][a] * Delta_out[b] * ETA;
-            //printf("w_out %d:%d = %lf\n", a,b, w_out[a][b]);
-         }
-      }
-      for (int a = HLnum - 1; a >= 0; a--) {
-         for (int b = 0; b < HLneurons[a]; b++) {
-            w_bias[a][b] += Delta[a][b] * bias * ETA;
-            //printf("w_bias %d:%d = %lf\n", a, b, w_bias[a][b]);
-         }
-      }
-      for (int a = 0; a < OutputNUM; a++) {
-         w_out_bias[a] += Delta_out[a] * bias * ETA;
-         //printf("w_out_bias %d = %lf\n", a, w_out_bias[a]);
-      }
-   }
-   
    ```
    </div>
    </details>
 
 - 하지만 학습 능률을 파악하는데 설정값을 여러번 바꿔주며 관찰해야합니다.
 - **#Define** 으로만 설정값을 적용시키면 다른 설정값으로 바꿔 학습을 진행 시킬 때 Source Code를 다시 컴파일 시켜야하는 번거로움이 생깁니다.
-- 그래서 설정값을 'architecture.dat'와 'parameter.dat' File에 입력하여 1행에 전부 설정값을 입력한 후, 1행마다 학습을 진행합니다.<br/> File의 마지막 행이 전부 학습할 때까지 학습을 지속시켰습니다.
+- 그래서 설정값을 'architecture.dat'와 'parameter.dat' File에 입력하여 1행에 전부 설정값을 입력한 후, 1행마다 학습을 진행합니다.<br/> 그리고 File의 마지막 행이 전부 학습할 때까지 학습을 지속시켰습니다.
   - **architecture.dat** : ANN학습구조의 값을 기록할 파일 (Inputlayer Neurons, Hiddenlayer Neurons, Outputlayer Neurons)
   - **parameter.dat** : 학습 parameter값 혹은 학습 결과값을 저장할 epoch값들을 기록할 파일 (Learning Gain, epoch, error저장 epoch, W_epoch)
-<details>
-<summary>기존 코드</summary>
-<div markdown="1">  
+   <details>
+   <summary style="font-Weight : bold; font-size : 15px; color : #E43914;"> 개선된 코드 </summary>
+   <div markdown="1">  
 
-</div>
-</details>
+   
+   ```c
+   int InputNUM = 2;
+   int OutputNUM = 1;
+   int HLnum = 10;
+   int  bias = 0;
+   double ETA = 0.9;
+   int Epoch = 0;
+   int ErrCount, WeightCount;
+   int HLneurons[10] = { 15, 15, 15, 15, 15, 15, 15, 15, 15, 15};
+   int get_parameter(FILE* fd_arch, FILE* fd_para){
+      if(fscanf(fd_arch, "%d ", &InputNUM) != EOF) {
+         fscanf(fd_arch, "%d ", &HLnum);
+         for(int a = 0; a < HLnum; a++){
+            fscanf(fd_arch, "%d ", &HLneurons[a]);
+         }
+         fscanf(fd_arch, "%d\n", &OutputNUM);
+         fscanf(fd_para, "%lf %d %d %d %d\n", &ETA, &Epoch, &ErrCount, &WeightCount, &bias);
+         return 0;
+      }
+      else return 1;
+   }
+   
+   ```
+   </div>
+   </details>
 
 ## 6. 그 외 트러블 슈팅
 ## 7. 결과물
