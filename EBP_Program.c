@@ -8,6 +8,8 @@
 
 #pragma warning(disable : 4996)
 #pragma warning(disable : 4244)
+#define GridCount 500
+
 int InputNUM = 2;
 int OutputNUM = 1;
 int HLnum = 10;
@@ -25,12 +27,12 @@ double w_out_bias[2]; //bias - hidden layer2 w, bias - output layer w
 void append(char *dst, char c); //문자열 끝에 문자를 붙이기 위한 함수
 char * make_filename(char filename[]); //파일이름을 만들기 위한 함수
 int get_parameter(FILE* fd_arch, FILE* fd_para); //ANN구조와 학습 인자값을 결정하기 위한 함수
-int get_inputdata(FILE* fd_in, double u_in[], double target[]); //
-void evoluation_test(double * evaErr);
-void EBP(double u_in[], double u[][15], double u_out[], double Delta[][15], double Delta_out[], double *E, double target[]);
+int get_inputdata(FILE* fd_in, double u_in[], double target[]); //Inputdata를 file로 부터 얻기 위한 함수
+void EBP(double u_in[], double u[][15], double u_out[], double Delta[][15], double Delta_out[], double *E, double target[]); //EBP 알고리즘 학습 함수
+void evoluation_test(double * evaErr); // evoluation data의 Error값을 도출해 낼 함수
+void cmd_Grid_test(double u[][15], double u_out[], double target[]); //cmd창에 격자화시켜 시각적으로 학습 변화를 관찰하기 위한 함수
 
-int main()
-{
+int main(){
 	double x[10] = {0.0,}, t = 0;
 	time_t current;
 	struct tm* timer;
@@ -148,6 +150,11 @@ int main()
                   evoluation_test(&evaErr);
                   fprintf(fd_evaerr, "%lf\n", evaErr);
                }
+               if (cnt % GridCount == 0) {//w의 변화 GridCount번의 1번씩 cmd창에 격자화
+                  cmd_Grid_test(u, u_out, target);
+                  Sleep(150);
+		            system("cls"); //영상으로 제작할시 사용  
+               }
             }
             fclose(fd_evaerr);
             fclose(fd_out);
@@ -155,62 +162,9 @@ int main()
             end_part = clock();
             printf("종료\n해당 부분 학습시간 : %.3f\n",(float)(end_part - start_part)/CLOCKS_PER_SEC);
             printf("==========================\n");
-      }   
+      }
       fclose(fd_arch);
-      fclose(fd_para);
-		/*if (cnt % 500 == 0) { //w의 변화 100번의 1번씩 cmd창에 격자화
-		   for (double x2 = 3.0; x2 >= -3.0; x2 -= 0.1) {
-			  printf("\n");
-			  for (double x1 = -3.0; x1 <= 3.0; x1 += 0.1) {
-				  double s1[10][15] = { 0.0, };
-				  double s_out1[2] = { 0.0, };
-				  double u_in1[10] = { 0.0, };
-				  u_in1[0] = x1;
-				  u_in1[1] = x2;
-				  target[0] = t;
-
-				  // 만약 HLnum = 4
-				  // HLneurons[HLnum] = {2, 3, 4, 5} 라고 한다면
-				  for (int a = 0; a < HLneurons[0]; a++) {
-					  s1[0][a] += bias * w_bias[0][a]; //바이어스 2개만 더해짐
-					  for (int b = 0; b < InputNUM; b++) {
-						  s1[0][a] += u_in1[b] * w_in[b][a];
-						  //printf("s%d:%d = %lf\n", a, b, s[0][a]);
-					  }
-					  u[0][a] = 1.0 / (1.0 + exp(-s1[0][a]));
-					  //printf("u%d = %lf\n",a, u[0][a]);
-				  }
-
-				  for (int a = 0; a < HLnum - 1; a++) {
-					  for (int b = 0; b < HLneurons[a + 1]; b++) {
-						  s1[a + 1][b] += bias * w_bias[a + 1][b];
-						  for (int c = 0; c < HLneurons[a]; c++) {
-							  s1[a + 1][b] += HLw[a][b][c] * u[a][c];
-							  //printf("s%d:%d = %lf\n", a + 1, a, s[a + 1][b]);
-						  }
-						  u[a + 1][b] = 1.0 / (1.0 + exp(-s1[a + 1][b]));
-						  //printf("u%d = %lf\n", a+1, u[a+1][b]);
-
-					  }
-				  }
-
-				  for (int a = 0; a < OutputNUM; a++) {
-					  s_out1[a] += bias * w_out_bias[a];
-					  for (int b = 0; b < HLneurons[HLnum - 1]; b++) {
-						  s_out1[a] += w_out[b][a] * u[HLnum - 1][b];
-						  //printf("s_out%d = %lf\n", a, s_out[a]);
-					  }
-					  u_out[a] = 1.0 / (1.0 + exp(-s_out1[a]));
-				  }
-				 if (u_out[OutputNUM-1] >= 0.5)printf("O ");
-				 else printf(". ");
-			  }
-		   }
-		   printf("\n");
-		   Sleep(150);
-		   system("cls"); //영상으로 제작할시 사용
-		}*/
-	
+      fclose(fd_para);	
 	end_total = clock();
    printf("총 학습 시간 : %.3f\n", (float)(end_total - start_total)/CLOCKS_PER_SEC);
 }
@@ -427,4 +381,51 @@ void EBP(double u_in[], double u[][15], double u_out[], double Delta[][15], doub
          //printf("w_out_bias %d = %lf\n", a, w_out_bias[a]);
       }
    }
+void cmd_Grid_test(double u[][15], double u_out[], double target[]){
+   for (double x2 = 3.0; x2 >= -3.0; x2 -= 0.1) {
+			  printf("\n");
+			  for (double x1 = -3.0; x1 <= 3.0; x1 += 0.1) {
+				  double s1[10][15] = { 0.0, };
+				  double s_out1[2] = { 0.0, };
+				  double u_in1[10] = { 0.0, };
+				  u_in1[0] = x1;
+				  u_in1[1] = x2;
+				  // 만약 HLnum = 4
+				  // HLneurons[HLnum] = {2, 3, 4, 5} 라고 한다면
+				  for (int a = 0; a < HLneurons[0]; a++) {
+					  s1[0][a] += bias * w_bias[0][a]; //바이어스 2개만 더해짐
+					  for (int b = 0; b < InputNUM; b++) {
+						  s1[0][a] += u_in1[b] * w_in[b][a];
+						  //printf("s%d:%d = %lf\n", a, b, s[0][a]);
+					  }
+					  u[0][a] = 1.0 / (1.0 + exp(-s1[0][a]));
+					  //printf("u%d = %lf\n",a, u[0][a]);
+				  }
 
+				  for (int a = 0; a < HLnum - 1; a++) {
+					  for (int b = 0; b < HLneurons[a + 1]; b++) {
+						  s1[a + 1][b] += bias * w_bias[a + 1][b];
+						  for (int c = 0; c < HLneurons[a]; c++) {
+							  s1[a + 1][b] += HLw[a][b][c] * u[a][c];
+							  //printf("s%d:%d = %lf\n", a + 1, a, s[a + 1][b]);
+						  }
+						  u[a + 1][b] = 1.0 / (1.0 + exp(-s1[a + 1][b]));
+						  //printf("u%d = %lf\n", a+1, u[a+1][b]);
+
+					  }
+				  }
+
+				  for (int a = 0; a < OutputNUM; a++) {
+					  s_out1[a] += bias * w_out_bias[a];
+					  for (int b = 0; b < HLneurons[HLnum - 1]; b++) {
+						  s_out1[a] += w_out[b][a] * u[HLnum - 1][b];
+						  //printf("s_out%d = %lf\n", a, s_out[a]);
+					  }
+					  u_out[a] = 1.0 / (1.0 + exp(-s_out1[a]));
+				  }
+				 if (u_out[OutputNUM-1] >= 0.5)printf("O ");
+				 else printf(". ");
+			  }
+		   }
+		   printf("\n");
+}
