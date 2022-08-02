@@ -172,7 +172,7 @@ char * make_filename(char filename[]){//file이름을 만들기 위한 함수
 - cmd_Grid_test를 하기 위한 2차원 inputdata는 2개 밖에 존재하지 않지만
 - 이 프로그램의 최대 inputdata개수는 10개입니다.
 - architecture.dat 파일에서 inputdata 개수는 정해지고 이 개수대로 실제 inputdata 파일의 개수만큼 읽습니다.
-- 이를 inputdata 파일이 전부 읽힐 때 까지 **while문으로 EBP알고이즘을 반복 학습**을 시킵니다.
+- 이를 inputdata 파일이 전부 읽힐 때 까지 **while문으로 EBP알고리즘을 반복 학습**을 시킵니다.
 ```c
 int get_inputdata(FILE* fd_in, double u_in[], double target[]){
    if(fscanf(fd_in, "%lf ", &u_in[0]) != EOF) {
