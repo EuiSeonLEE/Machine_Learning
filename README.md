@@ -47,7 +47,7 @@
 -  **학습 알고리즘 인자**들을 설정해 줍니다.
    - **Learning Gain** : 간단하게 학습율이라는 단위입니다. inputdata와 맞게 적당하게 설정해주어야 학습이 잘됩니다.
    - **Epoch** : 최대 학습 횟수입니다. 얼마나 학습할 것인지 미리 정해둡니다.
-   - **W_Epoch** : 학습 중간중간에 격자화를 시키기 위해, 몇번의 학습횟수 마다 격자화할 것인지 정해둡니다.
+   - **W_Epoch** : 학습 중간중간에 격자화를 시키기 위해, 몇 번의 학습횟수 마다 격자화할 것인지 정해둡니다.
  
 ### 4.4 EBP(Error Back Propagation) 알고리즘
 - **구조를 보면 Layer의 Neurons 사이에 연결된 선들이 보이는데, 이 선들에게는 가중치(Weight)가 존재합니다. 이 가중치(Weight)를 1번 학습 할 때 마다 Delta값으로 갱신해줍니다.**
@@ -65,12 +65,13 @@
 2. EBP 알고리즘으로 학습된 W를 갖고 y값을 도출하여 Threshold값으로 해당 좌표가 0과 1인지 판단한다.
 3. 판단이 되면 해당 좌표를 cmd창에 표현하기 위해 **0 이면 "."**, **1 이면 "O"** 으로 출력한다.
 
-### 4.6 Evolution Test 
+### 4.6 Evolution Test
 - Artificial Neural Networks(ANN)구조는 Layer마다 각기다른 Neuron개수로 설정됩니다.
 해당 inputdata가 어떤 설정값에 효율적으로 학습하는지 보기 위해 Evolution Data를 기록합니다.
 </div>
 </details>
- 
+<br/>
+
 ## 5. 핵심 트러블 슈팅
 ### 5.1 학습 설정값 셋팅 문제
 - 이 프로그램은 설정값을 갖고 학습을 시키고 설정된 ANN구조에따라 진행되는 학습 능률을 관찰하기 위해 개발했습니다.<br/>
@@ -78,7 +79,6 @@
    <details>
    <summary style="font-Weight : bold; font-size : 15px; color : #E43914;">기존 코드</summary>
    <div markdown="1">  
-
 
    ```c
    #define InputNUM 2
@@ -92,7 +92,7 @@
    ```
    </div>
    </details>
-
+<br/>
 - 하지만 학습 능률을 파악하는데 설정값을 여러번 바꿔주며 관찰해야합니다.
 - **#Define** 으로만 설정값을 적용시키면 다른 설정값으로 바꿔 학습을 진행 시킬 때 Source Code를 다시 컴파일 시켜야하는 번거로움이 생깁니다.
 - 그래서 설정값을 'architecture.dat'와 'parameter.dat' File에 입력하여 1행에 전부 설정값을 입력한 후, 1행마다 학습을 진행합니다.<br/> 그리고 File의 마지막 행이 전부 학습할 때까지 학습을 지속시켰습니다.
@@ -102,16 +102,16 @@
    <summary style="font-Weight : bold; font-size : 15px; color : #E43914;"> 개선된 코드 </summary>
    <div markdown="1">  
 
-   
+
    ```c
-   int InputNUM = 2;
-   int OutputNUM = 1;
-   int HLnum = 10;
+   int InputNUM = 0;
+   int OutputNUM = 0;
+   int HLnum = 0;
    int  bias = 0;
-   double ETA = 0.9;
+   double ETA = 0.0;
    int Epoch = 0;
    int ErrCount, WeightCount;
-   int HLneurons[10] = { 15, 15, 15, 15, 15, 15, 15, 15, 15, 15};
+   int HLneurons[10] = {0, };
    int get_parameter(FILE* fd_arch, FILE* fd_para){
       if(fscanf(fd_arch, "%d ", &InputNUM) != EOF) {
          fscanf(fd_arch, "%d ", &HLnum);
@@ -128,8 +128,133 @@
    ```
    </div>
    </details>
+<br/>
 
 ## 6. 그 외 트러블 슈팅
+<br/>
+<details>
+<summary>문자열 끝에 ASCII문자를 붙이는 문제</summary>
+<div markdown="1">  
+
+- 아무래도 **C언어**이다보니 문자열의 편의성이 떨어지는 편입니다.
+- Test되는 여러 조건을 보기 위해 대표적인 조건으로 (Hiddenlayer개수, Learning Gain값, Bias 존재유무)를 file이름으로 구분 지었습니다. 
+- 학습조건이 바뀔 때 마다 자동으로 파일이름도 학습조건에따라 다르게 이름을 저장시키기 위해 **문자열 처리**는 필수였습니다.
+- 위 조건의 인자는 자료형 int의 영향을 받아 char로 표현을 하였고 ASCII코드의 영어대문자, 숫자를 갖고 인자값을 표현하였습니다.
+```c
+void append(char *dst, char c) {//문자열 끝에 문자를 붙이기 위한 함수
+    char *p = dst;
+    while (*p != '\0') p++; // 문자열 끝 탐색
+    *p = c;
+    *(p+1) = '\0'; 
+}
+char * make_filename(char filename[]){//file이름을 만들기 위한 함수
+   char str_HLn = 64 + HLnum; // ABCD...YZ
+   char str_ETA = 48 + (int)(ETA * 10);//1234...9
+   char str_bias = 48 + bias; // 0 or 1
+
+   append(filename, str_HLn);
+   append(filename, str_ETA);
+   append(filename, str_bias);
+   strcat(filename,".txt");
+
+   printf("파일이름2 : %s\n", filename);
+
+   return filename;
+}
+```
+</div>
+</details>
+<br/>
+<details>
+<summary>Inputdata를 file로 얻기 위한 문제</summary>
+<div markdown="1">  
+
+- cmd_Grid_test를 하기 위한 2차원 inputdata는 2개 밖에 존재하지 않지만
+- 이 프로그램의 최대 inputdata개수는 10개입니다.
+- architecture.dat 파일에서 inputdata 개수는 정해지고 이 개수대로 실제 inputdata 파일의 개수만큼 읽습니다.
+- 이를 inputdata 파일이 전부 읽힐 때 까지 **while문으로 EBP알고이즘을 반복 학습**을 시킵니다.
+```c
+int get_inputdata(FILE* fd_in, double u_in[], double target[]){
+   if(fscanf(fd_in, "%lf ", &u_in[0]) != EOF) {
+      for(int a = 1; a < InputNUM; a++){
+         fscanf(fd_in, "%lf ", &u_in[a]);
+      }
+      for(int b = 0; b < OutputNUM - 1; b++){
+         fscanf(fd_in, "%lf", &target[b]);
+      }
+      fscanf(fd_in, "%lf\n", &target[OutputNUM - 1]);
+      return 0;
+   }
+   else return 1; 
+}
+```
+
+</div>
+</details>
+<br/>
+<details>
+<summary>2차원 학습 과정을 시각화</summary>
+<div markdown="1"> 
+
+- 2차원 학습 과정을 시각화하기 위해 학습 중간중간 학습 결과가 2차원 좌표의 영역을 구분시켜 우리가 원하는 영역대로 학습을 하고 있는지 관찰 할 수 있어야 합니다.
+- 저는 cmd창에 **(x, y)좌표**를 **(-3.0 ~ 3.0, -3.0 ~ 3.0)**영역을 **0.1칸 씩** 표현하였습니다.
+- 각 좌표의 학습 결과값인 0과 1을 표현하였습니다.
+  - **0 이면 '.'**
+  - **1 이면 'O'**
+```c
+void cmd_Grid_test(double u[][15], double u_out[], double target[]){
+   for (double x2 = 3.0; x2 >= -3.0; x2 -= 0.1) {
+      printf("\n");
+      for (double x1 = -3.0; x1 <= 3.0; x1 += 0.1) {
+         double s1[10][15] = { 0.0, };
+         double s_out1[2] = { 0.0, };
+         double u_in1[10] = { 0.0, };
+         u_in1[0] = x1;
+         u_in1[1] = x2;
+         // 만약 HLnum = 4
+         // HLneurons[HLnum] = {2, 3, 4, 5} 라고 한다면
+         for (int a = 0; a < HLneurons[0]; a++) {
+            s1[0][a] += bias * w_bias[0][a]; //바이어스 2개만 더해짐
+            for (int b = 0; b < InputNUM; b++) {
+               s1[0][a] += u_in1[b] * w_in[b][a];
+               //printf("s%d:%d = %lf\n", a, b, s[0][a]);
+            }
+            u[0][a] = 1.0 / (1.0 + exp(-s1[0][a]));
+            //printf("u%d = %lf\n",a, u[0][a]);
+         }
+
+         for (int a = 0; a < HLnum - 1; a++) {
+            for (int b = 0; b < HLneurons[a + 1]; b++) {
+               s1[a + 1][b] += bias * w_bias[a + 1][b];
+               for (int c = 0; c < HLneurons[a]; c++) {
+                  s1[a + 1][b] += HLw[a][b][c] * u[a][c];
+                  //printf("s%d:%d = %lf\n", a + 1, a, s[a + 1][b]);
+               }
+               u[a + 1][b] = 1.0 / (1.0 + exp(-s1[a + 1][b]));
+               //printf("u%d = %lf\n", a+1, u[a+1][b]);
+
+            }
+         }
+
+         for (int a = 0; a < OutputNUM; a++) {
+            s_out1[a] += bias * w_out_bias[a];
+            for (int b = 0; b < HLneurons[HLnum - 1]; b++) {
+               s_out1[a] += w_out[b][a] * u[HLnum - 1][b];
+               //printf("s_out%d = %lf\n", a, s_out[a]);
+            }
+            u_out[a] = 1.0 / (1.0 + exp(-s_out1[a]));
+         }
+         if (u_out[OutputNUM-1] >= 0.5)printf("O ");
+         else printf(". ");
+      }
+   }
+   printf("\n");
+}
+```
+</div>
+</details>
+<br/>
+
 ## 7. 결과물
 
 ### 7.1 inputdata : X
