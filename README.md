@@ -95,7 +95,7 @@
 <br/>
 
 - 하지만 학습 능률을 파악하는데 설정값을 여러번 바꿔주며 관찰해야합니다.
-- **#Define** 으로만 설정값을 적용시키면 다른 설정값으로 바꿔 학습을 진행 시킬 때 Source Code를 다시 컴파일 시켜야하는 번거로움이 생깁니다.
+- **#Define** 으로만 설정값을 적용시키면 다른 설정값으로 바꿔 학습을 진행 시킬 때 Source Code를 **다시 컴파일 시켜야하는 번거로움**이 생깁니다.
 - 그래서 설정값을 'architecture.dat'와 'parameter.dat' File에 입력하여 1행에 전부 설정값을 입력한 후, 1행마다 학습을 진행합니다.<br/> 그리고 File의 마지막 행이 전부 학습할 때까지 학습을 지속시켰습니다.
   - **architecture.dat** : ANN학습구조의 값을 기록할 파일 (Inputlayer Neurons, Hiddenlayer Neurons, Outputlayer Neurons)
   - **parameter.dat** : 학습 parameter값 혹은 학습 결과값을 저장할 epoch값들을 기록할 파일 (Learning Gain, epoch, error저장 epoch, W_epoch)
