@@ -1,7 +1,7 @@
 # Machine_Learning project 요약
 ## 1. 목적
->Artificial Neural Networks(ANN)구조를 C언어를 통해 설계하여 Learning 알고리즘을 통해 2차원 영역을 학습하고
-최적의 학습 결과물을 만들며 Machine Learing을 이해한다.
+>**Artificial Neural Networks(ANN)구조**를 **C언어**를 통해 설계하여 Learning 알고리즘을 통해 2차원 영역을 학습하고
+최적의 학습 결과물을 만들며 **Machine Learing을 이해한다.**
 
 
 ## 2. 제작기간 & 참여인원
@@ -9,9 +9,9 @@
 - 개인 프로젝트
 ## 3. stack
 ### 사용 알고리즘
-- Perseptron
-- DeltaRule
-- EBP(Error Back Propagation)
+- **Perseptron**
+- **DeltaRule**
+- **EBP(Error Back Propagation)**
 ### 사용 언어 & 프로그램
 
 - <img src="https://img.shields.io/badge/C-A8B9CC?style=flat-square&logo=C&logoColor=black"/></a> 
