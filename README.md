@@ -100,7 +100,7 @@
   - **architecture.dat** : ANN학습구조의 값을 기록할 파일 (Inputlayer Neurons, Hiddenlayer Neurons, Outputlayer Neurons)
   - **parameter.dat** : 학습 parameter값 혹은 학습 결과값을 저장할 epoch값들을 기록할 파일 (Learning Gain, epoch, error저장 epoch, W_epoch)
    <details>
-   <summary style="font-Weight : bold; font-size : 15px; color : #E43914;"> 개선된 코드 </summary>
+   <summary style="font-Weight : bold; font-size : 15px; color : #E43914;"> :smile: 개선된 코드 </summary>
    <div markdown="1">  
 
 
