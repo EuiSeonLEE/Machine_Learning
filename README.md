@@ -24,7 +24,7 @@
 학습시킬 inputdata의 **최적의 학습 속도와 학습 정확도**를 알 수 있습니다.<br/>
 
 <details>
-<summary> :pushpin: 핵심 기능 설명 펼치기 </summary>
+<summary> :mag_right: 핵심 기능 설명 펼치기 </summary>
 <div markdown="1">  
 
 
