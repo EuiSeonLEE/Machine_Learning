@@ -51,7 +51,7 @@
  
 ### 4.4 EBP(Error Back Propagation) 알고리즘 :pushpin:[코드 확인](https://github.com/EuiSeonLEE/Machine_Learning/blob/e0f799fd11437b1e4ee8273b52eb1b2f1f551720/EBP_Program.c#L280)
 - **구조를 보면 Layer의 Neurons 사이에 연결된 선들이 보이는데, 이 선들에게는 가중치(Weight)가 존재합니다. 이 가중치(Weight)를 1번 학습 할 때 마다 Delta값으로 갱신해줍니다.**
-1. Layer가 넘어갈 때 마다 해당 Layer의 각 Neuron들은 연결된 Neuron들과 가중치에게 영향을 받게 되는데, 이에 대한 결과 값을 u라고 정의한다. :pin:
+1. Layer가 넘어갈 때 마다 해당 Layer의 각 Neuron들은 연결된 Neuron들과 가중치에게 영향을 받게 되는데, 이에 대한 결과 값을 u라고 정의한다.
 2. 최종 Output Neuron들의 u들을 모두 더한 값을 최종 결과값 y로 정의한다.
 3. y로 해당학습의 Error율을 구한다.
 4. y와 미리 설정된 target값으로 계산하여 Output Neuron의 Delta값을 구한다.
