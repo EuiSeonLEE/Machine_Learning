@@ -36,7 +36,7 @@
 ### 4.2 플로우 차트
 ![FlowChart](https://user-images.githubusercontent.com/84891209/179398552-d9e61152-d855-4a8c-a724-5eec469203c5.png)
 
-### 4.3 학습 알고리즘 인자 설정
+### 4.3 학습 알고리즘 인자 설정 :pin:
 - 학습 알고리즘 인자를 설정하기 전, Artificial Neural Networks(ANN)을 구조적으로 설정 해주어야 합니다.
   -  **Hidden Layer 개수** : Hidden Layer는 1 ~ 10개 사이로 설정 가능합니다.
   -  **Hidden Neurons 개수** : Hidden Neurons는 1 ~ 15개 사이로 설정 가능합니다.
