@@ -68,6 +68,7 @@
 ### 4.6 Evolution Test :pushpin:[코드 확인](https://github.com/EuiSeonLEE/Machine_Learning/blob/e0f799fd11437b1e4ee8273b52eb1b2f1f551720/EBP_Program.c#L218)
 - Artificial Neural Networks(ANN)구조는 Layer마다 각기다른 Neuron개수로 설정됩니다.
 해당 inputdata가 어떤 설정값에 효율적으로 학습하는지 보기 위해 Evolution Data를 기록합니다.
+  #### MATLAB 시각화 :pushpin:[코드 확인](https://github.com/EuiSeonLEE/Machine_Learning/blob/d14519c798145f432ae16f1108d0fe888683962f/4%EB%B6%84%ED%95%A0_Learning_curve.m#L1)
   ![err_biasO](https://user-images.githubusercontent.com/84891209/184341330-6c18d2c5-f557-49d4-98f0-00d7bc024058.jpg)
   ![err_biasX](https://user-images.githubusercontent.com/84891209/184341369-ec584830-96dc-4547-b739-2445fb041f56.jpg)
 
