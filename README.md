@@ -59,13 +59,13 @@
 6. 모두 구한 Delta값으로 연결된 각 Neuron들의 가중치(Weight)를 갱신한다.
 7. 1~6번 과정을 inputdata의 좌표값이 모두 계산되야 1 epoch(학습 횟수)이다.
 
-### 4.5 Grid Test
+### 4.5 Grid Test :pushpin:[코드 확인](https://github.com/EuiSeonLEE/Machine_Learning/blob/e0f799fd11437b1e4ee8273b52eb1b2f1f551720/EBP_Program.c#L384)
 - **해당 프로그램의 학습 진행 과정을 볼 수 있게 격자화(시각화)하여 관찰할 수 있습니다.**
 1. 몇번의 epoch(학습 횟수) 마다 격자화할 것인지 **W_Epoch**라는 정해진 인자로 결정한다.
 2. EBP 알고리즘으로 학습된 W를 갖고 y값을 도출하여 Threshold값으로 해당 좌표가 0과 1인지 판단한다.
 3. 판단이 되면 해당 좌표를 cmd창에 표현하기 위해 **0 이면 "."**, **1 이면 "O"** 으로 출력한다.
 
-### 4.6 Evolution Test
+### 4.6 Evolution Test :pushpin:[코드 확인](https://github.com/EuiSeonLEE/Machine_Learning/blob/e0f799fd11437b1e4ee8273b52eb1b2f1f551720/EBP_Program.c#L218)
 - Artificial Neural Networks(ANN)구조는 Layer마다 각기다른 Neuron개수로 설정됩니다.
 해당 inputdata가 어떤 설정값에 효율적으로 학습하는지 보기 위해 Evolution Data를 기록합니다.
 </div>
