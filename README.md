@@ -77,7 +77,7 @@
 - 이 프로그램은 설정값을 갖고 학습을 시키고 설정된 ANN구조에따라 진행되는 학습 능률을 관찰하기 위해 개발했습니다.<br/>
 그래서 **#Define** 혹은 **전역변수**으로 설정값을 설정하는 방법을 적용시켰습니다.
    <details>
-   <summary style="font-Weight : bold; font-size : 15px; color : #E43914;">기존 코드</summary>
+   <summary style="font-Weight : bold; font-size : 15px; color : #E43914;"> :confused: 기존 코드</summary>
    <div markdown="1">  
 
    ```c
