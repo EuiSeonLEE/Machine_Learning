@@ -36,7 +36,7 @@
 ### 4.2 플로우 차트
 ![FlowChart](https://user-images.githubusercontent.com/84891209/179398552-d9e61152-d855-4a8c-a724-5eec469203c5.png)
 
-### 4.3 학습 알고리즘 인자 설정 :pushpin:[코드 확인](https://github.com/EuiSeonLEE/Machine_Learning/blob/e0f799fd11437b1e4ee8273b52eb1b2f1f551720/EBP_Program.c#L13-L28)
+### 4.3 학습 알고리즘 인자 설정 :pushpin:[코드 확인](https://github.com/EuiSeonLEE/Machine_Learning/blob/e0f799fd11437b1e4ee8273b52eb1b2f1f551720/EBP_Program.c#L192)
 - 학습 알고리즘 인자를 설정하기 전, Artificial Neural Networks(ANN)을 구조적으로 설정 해주어야 합니다.
   -  **Hidden Layer 개수** : Hidden Layer는 1 ~ 10개 사이로 설정 가능합니다.
   -  **Hidden Neurons 개수** : Hidden Neurons는 1 ~ 15개 사이로 설정 가능합니다.
@@ -49,7 +49,7 @@
    - **Epoch** : 최대 학습 횟수입니다. 얼마나 학습할 것인지 미리 정해둡니다.
    - **W_Epoch** : 학습 중간중간에 격자화를 시키기 위해, 몇 번의 학습횟수 마다 격자화할 것인지 정해둡니다.
  
-### 4.4 EBP(Error Back Propagation) 알고리즘
+### 4.4 EBP(Error Back Propagation) 알고리즘 :pushpin:[코드 확인](https://github.com/EuiSeonLEE/Machine_Learning/blob/e0f799fd11437b1e4ee8273b52eb1b2f1f551720/EBP_Program.c#L280)
 - **구조를 보면 Layer의 Neurons 사이에 연결된 선들이 보이는데, 이 선들에게는 가중치(Weight)가 존재합니다. 이 가중치(Weight)를 1번 학습 할 때 마다 Delta값으로 갱신해줍니다.**
 1. Layer가 넘어갈 때 마다 해당 Layer의 각 Neuron들은 연결된 Neuron들과 가중치에게 영향을 받게 되는데, 이에 대한 결과 값을 u라고 정의한다. :pin:
 2. 최종 Output Neuron들의 u들을 모두 더한 값을 최종 결과값 y로 정의한다.
