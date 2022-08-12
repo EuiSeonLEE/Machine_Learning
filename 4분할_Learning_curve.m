@@ -1,4 +1,4 @@
-Num = 3000;
+Num = 4000;
 subplot(2,2,1)
 E = load('outputdata_L90.txt'); %data 불러오기
 x = 1:Num;
