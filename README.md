@@ -19,6 +19,7 @@
 - <img src="https://img.shields.io/badge/C-A8B9CC?style=flat-square&logo=C&logoColor=black"/></a> 
 - <img src="https://img.shields.io/badge/MATLAB-A30701?style=flat-square&logo=MathWorks&logoColor=white"/></a>
 - <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat-square&logo=Visual Studio Code&logoColor=white"/></a> 
+<br/>
 
 ## 4. 핵심기능
 이 프로그램의 **핵심 기능은 Nuerons 개수 조절 기능**입니다.<br/>
