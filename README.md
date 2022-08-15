@@ -1,4 +1,4 @@
-# Machine_Learning project 요약
+# 📌 Machine_Learning
 ## 1. 목적
 >**Artificial Neural Networks(ANN)구조**를 **C언어**를 통해 설계하여 Learning 알고리즘을 통해 2차원 영역을 학습하고
 최적의 학습 결과물을 만들며 **Machine Learing을 이해한다.**
