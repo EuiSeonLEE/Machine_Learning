@@ -22,7 +22,7 @@
 <br/>
 
 ## 4. 핵심기능
-이 프로그램의 **핵심 기능은 Nuerons 개수 조절 기능**입니다.<br/>
+이 프로그램의 **핵심 기능은 Artificial Neural Networks(ANN)구조에서 Error Back Propagation(EBP) 알고리즘으로 컴퓨터가 학습을 하는 기능**입니다.<br/>
 **architecture.dat**과 **parameter.dat** 파일로 입력받아 해당 layer 마다 Nuerons 들을 조절하며 학습을 진행할 수 있으며<br/>
 학습시킬 inputdata의 **최적의 학습 속도와 학습 정확도**를 알 수 있습니다.<br/>
 
