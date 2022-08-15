@@ -2,11 +2,12 @@
 ## 1. 목적
 >**Artificial Neural Networks(ANN)구조**를 **C언어**를 통해 설계하여 Learning 알고리즘을 통해 2차원 영역을 학습하고
 최적의 학습 결과물을 만들며 **Machine Learing을 이해한다.**
-
+<br/>
 
 ## 2. 제작기간 & 참여인원
 - 2022년 05월 18일 ~ 06월 06일
 - 개인 프로젝트
+<br/>
 ## 3. stack
 ### 사용 알고리즘
 - **Perseptron**
