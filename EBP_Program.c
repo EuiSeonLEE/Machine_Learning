@@ -383,49 +383,49 @@ void EBP(double u_in[], double u[][15], double u_out[], double Delta[][15], doub
    }
 void cmd_Grid_test(double u[][15], double u_out[], double target[]){
    for (double x2 = 3.0; x2 >= -3.0; x2 -= 0.1) {
-			  printf("\n");
-			  for (double x1 = -3.0; x1 <= 3.0; x1 += 0.1) {
-				  double s1[10][15] = { 0.0, };
-				  double s_out1[2] = { 0.0, };
-				  double u_in1[10] = { 0.0, };
-				  u_in1[0] = x1;
-				  u_in1[1] = x2;
-				  // 만약 HLnum = 4
-				  // HLneurons[HLnum] = {2, 3, 4, 5} 라고 한다면
-				  for (int a = 0; a < HLneurons[0]; a++) {
-					  s1[0][a] += bias * w_bias[0][a]; //바이어스 2개만 더해짐
-					  for (int b = 0; b < InputNUM; b++) {
-						  s1[0][a] += u_in1[b] * w_in[b][a];
-						  //printf("s%d:%d = %lf\n", a, b, s[0][a]);
-					  }
-					  u[0][a] = 1.0 / (1.0 + exp(-s1[0][a]));
-					  //printf("u%d = %lf\n",a, u[0][a]);
-				  }
-
-				  for (int a = 0; a < HLnum - 1; a++) {
-					  for (int b = 0; b < HLneurons[a + 1]; b++) {
-						  s1[a + 1][b] += bias * w_bias[a + 1][b];
-						  for (int c = 0; c < HLneurons[a]; c++) {
-							  s1[a + 1][b] += HLw[a][b][c] * u[a][c];
-							  //printf("s%d:%d = %lf\n", a + 1, a, s[a + 1][b]);
-						  }
-						  u[a + 1][b] = 1.0 / (1.0 + exp(-s1[a + 1][b]));
-						  //printf("u%d = %lf\n", a+1, u[a+1][b]);
-
-					  }
-				  }
-
-				  for (int a = 0; a < OutputNUM; a++) {
-					  s_out1[a] += bias * w_out_bias[a];
-					  for (int b = 0; b < HLneurons[HLnum - 1]; b++) {
-						  s_out1[a] += w_out[b][a] * u[HLnum - 1][b];
-						  //printf("s_out%d = %lf\n", a, s_out[a]);
-					  }
-					  u_out[a] = 1.0 / (1.0 + exp(-s_out1[a]));
-				  }
-				 if (u_out[OutputNUM-1] >= 0.5)printf("O ");
-				 else printf(". ");
+	  printf("\n");
+	  for (double x1 = -3.0; x1 <= 3.0; x1 += 0.1) {
+		  double s1[10][15] = { 0.0, };
+		  double s_out1[2] = { 0.0, };
+		  double u_in1[10] = { 0.0, };
+		  u_in1[0] = x1;
+		  u_in1[1] = x2;
+		  // 만약 HLnum = 4
+		  // HLneurons[HLnum] = {2, 3, 4, 5} 라고 한다면
+		  for (int a = 0; a < HLneurons[0]; a++) {
+			  s1[0][a] += bias * w_bias[0][a]; //바이어스 2개만 더해짐
+			  for (int b = 0; b < InputNUM; b++) {
+				  s1[0][a] += u_in1[b] * w_in[b][a];
+				  //printf("s%d:%d = %lf\n", a, b, s[0][a]);
 			  }
-		   }
-		   printf("\n");
+			  u[0][a] = 1.0 / (1.0 + exp(-s1[0][a]));
+			  //printf("u%d = %lf\n",a, u[0][a]);
+		  }
+
+		  for (int a = 0; a < HLnum - 1; a++) {
+			  for (int b = 0; b < HLneurons[a + 1]; b++) {
+				  s1[a + 1][b] += bias * w_bias[a + 1][b];
+				  for (int c = 0; c < HLneurons[a]; c++) {
+					  s1[a + 1][b] += HLw[a][b][c] * u[a][c];
+					  //printf("s%d:%d = %lf\n", a + 1, a, s[a + 1][b]);
+				  }
+				  u[a + 1][b] = 1.0 / (1.0 + exp(-s1[a + 1][b]));
+				  //printf("u%d = %lf\n", a+1, u[a+1][b]);
+
+			  }
+		  }
+
+		  for (int a = 0; a < OutputNUM; a++) {
+			  s_out1[a] += bias * w_out_bias[a];
+			  for (int b = 0; b < HLneurons[HLnum - 1]; b++) {
+				  s_out1[a] += w_out[b][a] * u[HLnum - 1][b];
+				  //printf("s_out%d = %lf\n", a, s_out[a]);
+			  }
+			  u_out[a] = 1.0 / (1.0 + exp(-s_out1[a]));
+		  }
+		 if (u_out[OutputNUM-1] >= 0.5)printf("O ");
+		 else printf(". ");
+	  }
+   }
+   printf("\n");
 }
